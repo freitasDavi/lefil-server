@@ -1,16 +1,19 @@
 import fastify from "fastify";
+import routes from "./routes";
+import fastifyCors from "@fastify/cors";
+import { 
+    jsonSchemaTransform, serializerCompiler, validatorCompiler, ZodTypeProvider
+} from "fastify-type-provider-zod"
 
-const server = fastify();
+const server = fastify()
+    .withTypeProvider<ZodTypeProvider>();
 
-server.get("/", async (request, reply) => {
-    return reply.send({
-        message: "Hello world"
-    })
-})
+server.setValidatorCompiler(validatorCompiler);
+server.setSerializerCompiler(serializerCompiler);
 
-server.get("/ping", async (request, reply) => {
-    return "pong"
-})
+server.register(fastifyCors)
+
+server.register(routes)
 
 server.listen({ port: 8080 }, (err, address) => {
     if (err) {
