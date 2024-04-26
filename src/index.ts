@@ -2,6 +2,7 @@ import fastify from "fastify";
 import routes from "./routes";
 import fastifyCors from "@fastify/cors";
 import fastifySwagger from "@fastify/swagger";
+import fastifyJwt from "@fastify/jwt"
 import { 
     jsonSchemaTransform,
  serializerCompiler, validatorCompiler, ZodTypeProvider
@@ -13,6 +14,10 @@ const server = fastify()
 
 server.setValidatorCompiler(validatorCompiler);
 server.setSerializerCompiler(serializerCompiler);
+
+server.register(fastifyJwt, {
+    secret: 'my-dirty-little-secret',
+})
 
 server.register(fastifyCors)
 

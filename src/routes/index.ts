@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify"
-import { createAccount } from "./auth/create-account"
+import { createAccount, login } from "./auth/create-account"
 
 export default async function (app: FastifyInstance) {
     app.get("/", async (request, reply) => {
@@ -13,5 +13,6 @@ export default async function (app: FastifyInstance) {
     })
 
     app.register(createAccount)
+    app.register(login)
     
 }
