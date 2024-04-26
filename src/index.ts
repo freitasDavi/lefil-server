@@ -1,9 +1,12 @@
 import fastify from "fastify";
 import routes from "./routes";
 import fastifyCors from "@fastify/cors";
+import fastifySwagger from "@fastify/swagger";
 import { 
+    jsonSchemaTransform,
  serializerCompiler, validatorCompiler, ZodTypeProvider
 } from "fastify-type-provider-zod"
+import fastifySwaggerUi from "@fastify/swagger-ui";
 
 const server = fastify()
     .withTypeProvider<ZodTypeProvider>();
@@ -12,6 +15,22 @@ server.setValidatorCompiler(validatorCompiler);
 server.setSerializerCompiler(serializerCompiler);
 
 server.register(fastifyCors)
+
+server.register(fastifySwagger, {
+    openapi: {
+      info: {
+        title: 'Lefil',
+        description: 'Api Lefil',
+        version: '1.0.0',
+      },
+      servers: [],
+    },
+    transform: jsonSchemaTransform,
+});
+  
+server.register(fastifySwaggerUi, {
+    routePrefix: '/docs',
+});
 
 server.register(routes)
 
