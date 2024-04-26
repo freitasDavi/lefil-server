@@ -2,7 +2,7 @@ import fastify from "fastify";
 import routes from "./routes";
 import fastifyCors from "@fastify/cors";
 import { 
-    jsonSchemaTransform, serializerCompiler, validatorCompiler, ZodTypeProvider
+ serializerCompiler, validatorCompiler, ZodTypeProvider
 } from "fastify-type-provider-zod"
 
 const server = fastify()
