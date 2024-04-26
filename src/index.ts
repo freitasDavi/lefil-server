@@ -8,6 +8,10 @@ server.get("/", async (request, reply) => {
     })
 })
 
+server.get("/ping", async (request, reply) => {
+    return "pong"
+})
+
 server.listen({ port: 8080 }, (err, address) => {
     if (err) {
         console.error(err);
